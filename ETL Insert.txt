@@ -1,0 +1,46 @@
+INSERT INTO Staging (status, bed, bath, acre_lot, city, state, zip_code, house_size, prev_sold_date, price) 
+select status, bed, bath, acre_lot, city, state, zip_code, house_size, prev_sold_date, price 
+
+From properties
+
+
+INSERT INTO DimProp(status, city, state, prev_sold_date)
+SELECT status, city, state, prev_sold_date
+FROM Staging;
+
+select * from Staging;
+
+INSERT INTO DimBuyer(Email_Id, Prefix, Name, Birth_Date, Phone_Number, Additional_Email_Id, Address, Zip_Code, City, State, Country, Link, Text)
+SELECT Email_Id, Prefix, Name, Birth_Date, Phone_Number, Additional_Email_Id, Address, Zip_Code, City, State, Country, Link, Text
+FROM Buyers
+
+UPDATE Staging
+SET PropertyID = DimProp.PropertyID
+FROM DimProp
+WHERE 
+    Staging.status = DimProp.status AND
+    Staging.city = DimProp.city AND
+    Staging.state = DimProp.state;
+	
+UPDATE Staging
+SET buyerID = subquery.row_num
+FROM (
+    SELECT propertyID, status, ROW_NUMBER() OVER (PARTITION BY propertyID, status ORDER BY propertyID) AS row_num
+    FROM Staging
+) AS subquery
+WHERE Staging.propertyID = subquery.propertyID AND Staging.status = subquery.status;
+
+UPDATE Staging
+SET 
+    Year = Buyers.Year,
+    Time = Buyers.Time,
+    SSN = Buyers.SSN
+FROM Buyers
+WHERE Staging.BuyerID = Buyers.BuyerID;
+
+
+INSERT INTO Fact(bed, bath, acre_lot, zip_Code, house_size, price, Year, Time, SSN, BuyerID, PropertyID)
+    SELECT bed, bath, acre_lot, zip_Code, house_size, price, Year, Time, SSN, BuyerID, PropertyID
+    FROM Staging
+	
+	select * from Fact;

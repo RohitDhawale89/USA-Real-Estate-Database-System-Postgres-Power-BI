@@ -1,0 +1,21 @@
+CREATE TABLE Buyers(
+  BuyerID SERIAL PRIMARY KEY,
+  Email_Id VARCHAR(50),
+  Prefix VARCHAR(4),
+  Name VARCHAR(20),
+  Birth_Date VARCHAR(12),
+  Phone_Number VARCHAR(14),  
+  Additional_Email_Id VARCHAR(26),  
+  Address VARCHAR(100),  
+  Zip_Code VARCHAR(10),   
+  City VARCHAR(20),  
+  State VARCHAR(20),  
+  Country VARCHAR(20),  
+  Year VARCHAR(6),   
+  Time VARCHAR(20),  
+  Link VARCHAR(50),  
+  Text VARCHAR(50),  
+  SSN VARCHAR(20)
+);
+
+ALTER TABLE Buyers ADD COLUMN BuyerID serial PRIMARY KEY;

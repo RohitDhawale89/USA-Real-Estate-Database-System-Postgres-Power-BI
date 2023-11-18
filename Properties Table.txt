@@ -1,0 +1,20 @@
+CREATE TABLE Properties (
+  status VARCHAR(100),  
+  bed VARCHAR(100),  
+  bath VARCHAR(100),  
+  acre_lot VARCHAR(100),
+  city VARCHAR(100),  
+  state VARCHAR(100),  
+  zip_code VARCHAR(100),  
+  house_size VARCHAR(100),
+  prev_sold_date VARCHAR(100),
+  price VARCHAR(100),  
+  )
+
+ALTER TABLE Properties ADD COLUMN PropertyID serial PRIMARY KEY;
+
+
+ALTER TABLE Properties ADD COLUMN BuyerID int;
+
+ALTER TABLE properties ADD CONSTRAINT fk_buyerid FOREIGN KEY (buyerid) REFERENCES buyers(buyerid)
+

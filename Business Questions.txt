@@ -1,0 +1,35 @@
+1. Buyer Demographics:
+
+Business Questions:
+What is the distribution of buyers by country?
+How many buyers are there in each state?
+
+SELECT Country, COUNT(*) as Count
+FROM DimBuyer
+GROUP BY Country;
+
+SELECT State, COUNT(*) as Count
+FROM DimBuyer
+GROUP BY State;
+
+2. Property Insights:
+
+Business Questions:
+What is the average house size in different cities?
+
+
+SELECT dp.city, AVG(CAST(f.house_size AS NUMERIC)) as AverageHouseSize
+FROM DimProp dp
+INNER JOIN Fact f ON dp.PropertyID = f.PropertyID
+GROUP BY dp.city;
+
+Business Question:
+
+"What is the average price of properties with more than 3 bedrooms and 2 bathrooms in each city?"
+
+SELECT dp.city, 
+       AVG(CAST(f.price AS NUMERIC)) as AveragePrice
+FROM DimProp dp
+INNER JOIN Fact f ON dp.PropertyID = f.PropertyID
+WHERE CAST(f.bed AS NUMERIC) > 3 AND CAST(f.bath AS NUMERIC) > 2
+GROUP BY dp.city;

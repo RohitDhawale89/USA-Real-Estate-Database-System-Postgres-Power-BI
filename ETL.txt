@@ -1,0 +1,64 @@
+CREATE TABLE DimBuyer (
+  BuyerID SERIAL PRIMARY KEY,
+  Email_Id VARCHAR(100),  
+  Prefix VARCHAR(100),  
+  Name VARCHAR(100),  
+  Birth_Date VARCHAR(100),   
+  Phone_Number VARCHAR(100),  
+  Additional_Email_Id VARCHAR(100),  
+  Address VARCHAR(100),  
+  Zip_Code VARCHAR(100),  
+  City VARCHAR(100),  
+  State VARCHAR(100),  
+  Country VARCHAR(100),  
+  Link VARCHAR(100),  
+  Text VARCHAR(100)  
+);
+
+CREATE TABLE DimProp (
+  PropertyID SERIAL PRIMARY KEY,
+  status VARCHAR(100),  
+  city VARCHAR(100),  
+  state VARCHAR(100),  
+  prev_sold_date VARCHAR(100)
+);
+
+CREATE TABLE Fact (
+  FactID SERIAL PRIMARY KEY,
+  bed VARCHAR(100),
+  bath VARCHAR(100),
+  acre_lot VARCHAR(100),
+  zip_Code VARCHAR(100),
+  house_size VARCHAR(100),
+  price VARCHAR(100),
+  Year VARCHAR(100),
+  Time VARCHAR(100),
+  SSN VARCHAR(100),
+  BuyerID INT,
+  PropertyID INT,
+  CONSTRAINT FK_BuyerID FOREIGN KEY(BuyerID) REFERENCES DimBuyer(BuyerID),
+  CONSTRAINT FK_PropertyID FOREIGN KEY(PropertyID) REFERENCES DimProp(PropertyID)
+);
+
+CREATE TABLE Staging (
+  StagingID SERIAL PRIMARY KEY,
+  BuyerID INT,
+  PropertyID INT,
+  status VARCHAR(100),  
+  bed VARCHAR(100),  
+  bath VARCHAR(100),  
+  acre_lot VARCHAR(100),
+  city VARCHAR(100),  
+  state VARCHAR(100),  
+  zip_code VARCHAR(100),  
+  house_size VARCHAR(100),
+  prev_sold_date VARCHAR(100),
+  price VARCHAR(100),  
+  Year VARCHAR(100),
+  Time VARCHAR(100),
+  SSN VARCHAR(100)
+)
+
+
+SELECT * FROM Staging
+
